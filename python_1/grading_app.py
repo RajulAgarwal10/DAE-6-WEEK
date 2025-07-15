@@ -7,14 +7,14 @@ grades = {
     "3": {"Test": [], "Quiz": [], "Homework": [], "Classwork": []},
     "4": {"Test": [], "Quiz": [], "Homework": [], "Classwork": []},
 }
-
+#Defining weights of assignments
 category_weights = {
     "Test": 65,
     "Quiz": 25,
     "Homework": 5,
     "Classwork": 5
 }
-
+#function for start
 def start_menu():
     while True:
         print("\nPlease choose an option:")
@@ -28,7 +28,7 @@ def start_menu():
             exit()
         else:
             print("Invalid input. Please try again.")
-
+#function for user information(name and teacher)
 def get_user_info():
     while True:
         name = input("\nWhat's your name? ").strip()
@@ -37,7 +37,7 @@ def get_user_info():
             return name, teacher
         else:
             print("Please enter valid names for both fields.")
-
+#which class
 def select_class():
     classes = {
         "1": "Math",
@@ -54,7 +54,7 @@ def select_class():
             return choice, classes[choice]
         else:
             print("That class number is not on the list. Try again.")
-
+#Actions menu starter
 def action_menu():
     print("\nWhat would you like to do?")
     print("1. View current grade")
@@ -67,7 +67,7 @@ def action_menu():
             return choice
         else:
             print("Invalid input. Please try again.")
-
+#used to add
 def add_grade(class_choice):
     grade_types = {
         "1": ("Test", 65),
@@ -98,7 +98,7 @@ def add_grade(class_choice):
 
     grades[class_choice][category].append(grade)
     print(f"Grade of {grade} added as {category} for class {class_choice}.")
-
+#view grades
 def view_grades(class_choice, student_name):
     print(f"\nCalculating grades for {student_name} in class {class_choice}...")
     class_data = grades[class_choice]
@@ -123,7 +123,7 @@ def view_grades(class_choice, student_name):
         print(f"\nOverall grade: {final_grade:.2f}%")
     else:
         print("\nNo grades entered yet. Please add grades to see a total.")
-
+#menu for actions repeat
 def main():
     start_menu()
     student_name, teacher_name = get_user_info()
