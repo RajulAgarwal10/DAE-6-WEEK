@@ -154,7 +154,10 @@ def view_grades(class_choice, student_name):
 #This function enables editing and deleting already put in grades
 def edit_delete_grade(class_choice):
     class_data = grades[class_choice]
-    
+    print("\nCurrent grades in each category:")
+    for category, grade_list in class_data.items():
+        print(f"{category.capitalize()}: {grade_list if grade_list else 'No grades yet'}")
+
     print("\nWhich category do you want to modify?")
     categories = list(class_data.keys())
     for i, cat in enumerate(categories, 1):
