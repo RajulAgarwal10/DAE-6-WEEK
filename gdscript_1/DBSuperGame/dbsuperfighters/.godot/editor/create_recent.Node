@@ -1,0 +1,11 @@
+Sprite2D
+CanvasLayer
+Camera3D
+WorldEnvironment
+DirectionalLight3D
+MeshInstance3D
+Node3D
+AnimatedSprite2D
+AnimationPlayer
+Camera2D
+Node2D
