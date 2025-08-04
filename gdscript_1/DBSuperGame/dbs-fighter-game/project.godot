@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="DBS Fighter Game"
+run/main_scene="uid://caaprsfg116b6"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -18,6 +19,10 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+
+[global_group]
+
+Player=""
 
 [layer_names]
 
