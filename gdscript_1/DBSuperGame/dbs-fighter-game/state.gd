@@ -1,17 +1,11 @@
-class_name State
 extends Node
+class_name State
 
-func enter() -> void:
-	pass
+var player: CharacterBody2D
+var state_machine: StateMachine
 
-func exit() -> void:
-	pass
-
-func process_frame(delta: float) -> State:
-	return null
-
-func process_input(event: InputEvent) -> State:
-	return null
-
-func process_physics(delta: float) -> State:
-	return null
+func enter(): pass
+func exit(): pass
+func physics_update(_delta): pass
+func set_state_machine(sm):
+	state_machine = sm

@@ -1,10 +1,6 @@
-class_name PlayerState
+# player_state.gd
 extends State
-
-@onready var player: Player = get_tree().get_first_node_in_group("Player")
-
-#Animation Names
-var idle_anim: String = "Idle"
+class_name PlayerState
 
 func enter() -> void:
-	print("Entering PlayerState")
+	player.velocity = Vector2.ZERO

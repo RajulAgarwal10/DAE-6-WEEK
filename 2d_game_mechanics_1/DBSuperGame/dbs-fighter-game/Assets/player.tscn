@@ -1,6 +1,7 @@
-[gd_scene load_steps=36 format=3 uid="uid://63aqdl7kf7do"]
+[gd_scene load_steps=41 format=3 uid="uid://63aqdl7kf7do"]
 
 [ext_resource type="Texture2D" uid="uid://c2l0if8y8o743" path="res://Assets/Sprites/Brawler-Girl/Idle/idle1.png" id="1_bg7ob"]
+[ext_resource type="Script" uid="uid://bxjqcv7x8j7y6" path="res://Assets/SCRIPTS/player.gd" id="1_uxvuq"]
 [ext_resource type="Texture2D" uid="uid://bwxt1d6gw31en" path="res://Assets/Sprites/Brawler-Girl/Idle/idle2.png" id="2_mrs5c"]
 [ext_resource type="Texture2D" uid="uid://ibn1bsdmghaw" path="res://Assets/Sprites/Brawler-Girl/Idle/idle3.png" id="3_h3g6j"]
 [ext_resource type="Texture2D" uid="uid://cjahdg12ia37" path="res://Assets/Sprites/Brawler-Girl/Idle/idle4.png" id="4_uxvuq"]
@@ -16,6 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://cpdwso4u46m2q" path="res://Assets/Sprites/Brawler-Girl/Walk/walk10.png" id="14_5tqeq"]
 [ext_resource type="Script" uid="uid://7hsjmqn5lv6u" path="res://state_machine.gd" id="16_h3g6j"]
 [ext_resource type="Script" uid="uid://dggjrjjwnmlxo" path="res://idle.gd" id="16_uxvuq"]
+[ext_resource type="Script" uid="uid://dxrrq8njj63qv" path="res://attack.gd" id="18_dypu0"]
+[ext_resource type="Script" uid="uid://bwvarluysvn7c" path="res://walk.gd" id="19_t8foh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oj1vk"]
 atlas = ExtResource("1_bg7ob")
@@ -133,32 +136,20 @@ size = Vector2(17, 41)
 
 [sub_resource type="Animation" id="Animation_4e2cp"]
 resource_name = "Idle"
-length = 0.80002
+length = 4.0
 loop_mode = 1
 step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:animation")
+tracks/0/path = NodePath("Sprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_dypu0"]
@@ -166,40 +157,62 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:animation")
+tracks/0/path = NodePath("Sprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle"]
+"update": 0,
+"values": [Vector2(0, 0)]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
+
+[sub_resource type="Animation" id="Animation_t8foh"]
+resource_name = "attack"
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_osfge"]
+resource_name = "walk"
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t8foh"]
 _data = {
 &"Idle": SubResource("Animation_4e2cp"),
-&"RESET": SubResource("Animation_dypu0")
+&"RESET": SubResource("Animation_dypu0"),
+&"attack": SubResource("Animation_t8foh"),
+&"walk": SubResource("Animation_osfge")
 }
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-script = ExtResource("16_h3g6j")
+script = ExtResource("1_uxvuq")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_yjwyo")
-animation = &"idle"
+animation = &"walk"
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(-2.5, 10.5)
@@ -209,10 +222,17 @@ shape = SubResource("RectangleShape2D_20o4j")
 libraries = {
 &"": SubResource("AnimationLibrary_t8foh")
 }
+autoplay = "walk"
 
-[node name="State Machine" type="Node2D" parent="." node_paths=PackedStringArray("starting_state")]
+[node name="State Machine" type="Node2D" parent="."]
 script = ExtResource("16_h3g6j")
-starting_state = NodePath("Idle")
+initial_state_path = NodePath("Idle")
 
 [node name="Idle" type="Node2D" parent="State Machine"]
 script = ExtResource("16_uxvuq")
+
+[node name="Attack" type="Node2D" parent="State Machine"]
+script = ExtResource("18_dypu0")
+
+[node name="Walk" type="Node2D" parent="State Machine"]
+script = ExtResource("19_t8foh")

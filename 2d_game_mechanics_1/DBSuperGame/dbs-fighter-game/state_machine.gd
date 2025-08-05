@@ -1,25 +1,27 @@
-class_name StateMachine
 extends Node
+class_name StateMachine
 
+@export var initial_state_path: NodePath
 var current_state: State
 
-@export var starting_state: State
+func _ready():
+	current_state = get_node_or_null(initial_state_path)
+	if current_state:
+		current_state.set_state_machine(self)
+		current_state.player = get_parent()
+		current_state.enter()
 
-func _ready() -> void: change_state(starting_state)
+func _physics_process(delta):
+	if current_state:
+		current_state.physics_update(delta)
 
-func process_frame(delta: float) -> void:
-	var new_state: State = current_state.process_frame(delta)
-	if new_state: change_state(new_state)
-
-func process_input(event: InputEvent) -> void:
-	var new_state: State = current_state.process_input(event)
-	if new_state: change_state(new_state)
-
-func process_physics(delta: float) -> void:
-	var new_state: State = current_state.process_physics(delta)
-	if new_state: change_state(new_state)
-
-func change_state(new_state: State) -> void:
-	if current_state:current_state.exit()
+func change_state(state_name: String):
+	var new_state = get_node_or_null(state_name)
+	if not new_state:
+		push_warning("State '%s' not found." % state_name)
+		return
+	current_state.exit()
 	current_state = new_state
+	current_state.set_state_machine(self)
+	current_state.player = get_parent()
 	current_state.enter()
