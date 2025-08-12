@@ -1,0 +1,114 @@
+[gd_scene load_steps=20 format=3 uid="uid://bfkcdgrsjvmq4"]
+
+[ext_resource type="Script" uid="uid://p8a3rierno1r" path="res://enemy_script.gd" id="1_nnovl"]
+[ext_resource type="Texture2D" uid="uid://ccya55v5ay3iv" path="res://Assets/Sprites/Enemy-Punk/Hurt/hurt1.png" id="2_jmwgi"]
+[ext_resource type="Texture2D" uid="uid://p4q5pbkbwgcn" path="res://Assets/Sprites/Enemy-Punk/Hurt/hurt2.png" id="3_g2u8i"]
+[ext_resource type="Texture2D" uid="uid://0f58sj36e73v" path="res://Assets/Sprites/Enemy-Punk/Hurt/hurt3.png" id="4_otto8"]
+[ext_resource type="Texture2D" uid="uid://w4de4t07fsdk" path="res://Assets/Sprites/Enemy-Punk/Hurt/hurt4.png" id="5_8q82m"]
+[ext_resource type="Texture2D" uid="uid://cs2dd0l2bv4di" path="res://Assets/Sprites/Enemy-Punk/Idle/idle1.png" id="6_epc7x"]
+[ext_resource type="Texture2D" uid="uid://dfuharcj83qpw" path="res://Assets/Sprites/Enemy-Punk/Idle/idle2.png" id="7_o7rgc"]
+[ext_resource type="Texture2D" uid="uid://govroiolvix0" path="res://Assets/Sprites/Enemy-Punk/Idle/idle3.png" id="8_kdav3"]
+[ext_resource type="Texture2D" uid="uid://csgdigk3oh3gm" path="res://Assets/Sprites/Enemy-Punk/Idle/idle4.png" id="9_jpbtr"]
+[ext_resource type="Texture2D" uid="uid://cj7dhavc7ep85" path="res://Assets/Sprites/Enemy-Punk/Punch/punch1.png" id="10_qgdfx"]
+[ext_resource type="Texture2D" uid="uid://b56sx3x0bs75f" path="res://Assets/Sprites/Enemy-Punk/Punch/punch2.png" id="11_qku5p"]
+[ext_resource type="Texture2D" uid="uid://bfkiu5jk7re0l" path="res://Assets/Sprites/Enemy-Punk/Punch/punch3.png" id="12_l1fjw"]
+[ext_resource type="Texture2D" uid="uid://cbo2sei2sm08" path="res://Assets/Sprites/Enemy-Punk/Walk/walk1.png" id="13_b5wqg"]
+[ext_resource type="Texture2D" uid="uid://cemvd8pltu3oy" path="res://Assets/Sprites/Enemy-Punk/Walk/walk2.png" id="14_hgro5"]
+[ext_resource type="Texture2D" uid="uid://blck3dtfhvygq" path="res://Assets/Sprites/Enemy-Punk/Walk/walk3.png" id="15_18rq2"]
+[ext_resource type="Texture2D" uid="uid://4b538bmopahs" path="res://Assets/Sprites/Enemy-Punk/Walk/walk4.png" id="16_ccdwq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nnovl"]
+radius = 8.0
+height = 48.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0jgdh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_jmwgi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g2u8i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_otto8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_8q82m")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_epc7x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_o7rgc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_kdav3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_jpbtr")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_qgdfx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_qku5p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_l1fjw")
+}],
+"loop": false,
+"name": &"punch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_b5wqg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_hgro5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_18rq2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ccdwq")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nnovl"]
+size = Vector2(19, 46)
+
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_nnovl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_nnovl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(2, -7)
+sprite_frames = SubResource("SpriteFrames_0jgdh")
+animation = &"idle"
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+position = Vector2(-2.5, 0)
+shape = SubResource("RectangleShape2D_nnovl")
+
+[connection signal="body_entered" from="AttackHitbox" to="." method="_on_attack_hitbox_body_entered"]

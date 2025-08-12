@@ -1,7 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://dp1bfiku8gr0v"]
+[gd_scene load_steps=11 format=4 uid="uid://dp1bfiku8gr0v"]
 
 [ext_resource type="Texture2D" uid="uid://bebetgkepjwyj" path="res://Assets/Stage Layers/tileset.png" id="1_hbghi"]
 [ext_resource type="PackedScene" uid="uid://c0mnr0aws7gjp" path="res://player.tscn" id="2_hn12h"]
+[ext_resource type="PackedScene" uid="uid://0ti6ko7x2w6d" path="res://Spawn.tscn" id="3_hn12h"]
+[ext_resource type="PackedScene" uid="uid://dphyvefg201xk" path="res://Checkpoint.tscn" id="3_ihfcg"]
+[ext_resource type="PackedScene" uid="uid://b2mfej4u2djv6" path="res://TriggerZone.tscn" id="5_rka8t"]
+[ext_resource type="PackedScene" uid="uid://bfkcdgrsjvmq4" path="res://enemy.tscn" id="6_5hph3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ihfcg"]
 texture = ExtResource("1_hbghi")
@@ -593,6 +597,9 @@ tile_set = SubResource("TileSet_rka8t")
 position = Vector2(-232, 16)
 shape = SubResource("RectangleShape2D_hbghi")
 
+[node name="Checkpoint" parent="." instance=ExtResource("3_ihfcg")]
+position = Vector2(-49, 65)
+
 [node name="RightWall" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
@@ -602,3 +609,17 @@ shape = SubResource("RectangleShape2D_hn12h")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, 14)
 zoom = Vector2(2.6, 2.6)
+
+[node name="Spawner" parent="." instance=ExtResource("3_hn12h")]
+position = Vector2(116, 26)
+
+[node name="Checkpoint2" parent="." instance=ExtResource("3_ihfcg")]
+position = Vector2(-49, 66)
+
+[node name="TriggerZone" parent="." instance=ExtResource("5_rka8t")]
+position = Vector2(1, 69)
+
+[node name="Enemy" parent="." instance=ExtResource("6_5hph3")]
+position = Vector2(143, 55)
+
+[connection signal="tree_exited" from="Enemy" to="Spawner" method="_on_enemy_died"]

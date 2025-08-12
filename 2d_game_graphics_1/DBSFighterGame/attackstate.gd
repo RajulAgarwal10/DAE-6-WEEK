@@ -1,12 +1,22 @@
-extends State
+extends "res://state.gd"
 
-func enter(player):
+var player
+
+func enter(p):
+	player = p
+	player.enable_attack_hitbox()
 	player.animated_sprite.play("attack")
 
-func physics_update(delta):
-	# You can freeze player movement while attacking, or add logic here.
-	pass
+func exit():
+	if player:
+		player.disable_attack_hitbox()
 
 func handle_input(event):
-	# Optional: You could block inputs or queue combos here.
 	pass
+
+func update(delta):
+	if not player.animated_sprite.is_playing():
+		if player.is_on_floor():
+			player.switch_state("idle")
+		else:
+			player.switch_state("jump")
