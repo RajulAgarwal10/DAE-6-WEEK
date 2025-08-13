@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://csaawgbobxout"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_oufv8"]
+font_size = 24
+font_color = Color(0.741347, 0, 0.0667223, 1)
+
+[node name="DamageNumber" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "1"
+label_settings = SubResource("LabelSettings_oufv8")

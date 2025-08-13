@@ -1,0 +1,15 @@
+res://level_1_fixed2.0.tscn
+res://player.gd
+res://enemy_script.gd
+res://enemy.tscn
+res://player.tscn
+res://level_1.tscn
+res://specialstate.gd
+res://Spawner.gd
+res://GameUI.gd
+res://screenshake.gd
+res://HitsEffect.gd
+res://hit_spark.tscn
+res://hit_spark.gd
+res://damage_number.tscn
+res://damage_number.gd

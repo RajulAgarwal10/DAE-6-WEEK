@@ -4,10 +4,13 @@ var player
 
 func enter(p):
 	player = p
+	# safety: allow entering only if airborne
 	if player.is_on_floor():
+		# abort back to idle if somehow triggered on ground
 		player.switch_state("idle")
 		return
 
+	# consume the air attack
 	player.can_air_attack = false
 	player.enable_attack_hitbox()
 	player.animated_sprite.play("jump_kick")
@@ -20,5 +23,4 @@ func handle_input(event):
 	pass
 
 func update(delta):
-	if not player.animated_sprite.is_playing():
-		player.switch_state("jump")
+	pass

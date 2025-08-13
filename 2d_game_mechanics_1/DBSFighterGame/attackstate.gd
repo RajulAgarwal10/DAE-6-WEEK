@@ -7,16 +7,16 @@ func enter(p):
 	player.enable_attack_hitbox()
 	player.animated_sprite.play("attack")
 
+func update(delta):
+	if player.animated_sprite.animation_finished:
+		player.switch_state("idle")
+
 func exit():
-	if player:
-		player.disable_attack_hitbox()
+	player.disable_attack_hitbox()
+	player = null
+
+func physics_update(delta):
+	pass
 
 func handle_input(event):
 	pass
-
-func update(delta):
-	if not player.animated_sprite.is_playing():
-		if player.is_on_floor():
-			player.switch_state("idle")
-		else:
-			player.switch_state("jump")

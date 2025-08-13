@@ -1,5 +1,4 @@
 extends Node
-
 class_name State
 
 func enter(player): pass
